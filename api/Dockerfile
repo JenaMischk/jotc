@@ -11,8 +11,7 @@ COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 WORKDIR /usr/src/api
 
-COPY ./composer.json ./composer.json
-COPY ./composer.lock ./composer.lock
+COPY . .
 
 RUN composer install
 RUN composer dump-autoload

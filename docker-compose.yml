@@ -38,7 +38,12 @@ services:
     ports:
       - 4000:4000
     volumes:
-      - ./api:/usr/src/api
+      - ./api/assets:/usr/src/api/assets
+      - ./api/config:/usr/src/api/config
+      - ./api/src:/usr/src/api/src
+    depends_on:
+      - db
+      - redis
 
   tests:
     build: ./api/tests
