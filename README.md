@@ -1,8 +1,7 @@
 # Jumping On The Clouds
 
 ## Requirements
-This project requires you to have installed Docker Desktop or Docker plus Docker Compose.
-
+This project requires you to have installed Docker Desktop or Docker plus Docker Compose. You should also replace the test Emailable API Key for a live one in the .env file on the root directory.
 ## Running
 Run the following command in the root directory
     

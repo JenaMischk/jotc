@@ -63,7 +63,11 @@ final class UserValidator
         $key = hash('xxh128', "email_validation_$email");
 
         if(!$result = $this->cache->read($key)){
-            $result = file_get_contents("https://api.emailable.com/v1/verify?email=$email&api_key=test_2215ca54dd1a4942390b");
+            if(!getenv('EMAILABLE_API_KEY')){
+                throw new \Exception('Environment variable EMAILABLE_API_KEY must be set');
+            }
+            $emailableApiKey = getenv('EMAILABLE_API_KEY');
+            $result = file_get_contents("https://api.emailable.com/v1/verify?email=$email&api_key=$emailableApiKey");
             $this->cache->write($key, $result);
         }
        
