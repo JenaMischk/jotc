@@ -1,0 +1,51 @@
+version: '3'
+
+server:
+  command: "php src/psr-worker.php"
+
+http:
+  address: 0.0.0.0:4000
+  pool:
+    # num_workers: 16
+    # debug: true
+    # max_jobs: 1
+  middleware: [ "static" ]
+  # Settings for "static" middleware (docs: https://roadrunner.dev/docs/middleware-static/2.x/en).
+  static:
+    dir: "./assets"
+    forbid: [ "" ]
+    calculate_etag: false
+    weak: false
+    allow: [ ".html", ".js" ]
+    # request:
+    #   input: "custom-header"
+    # response:
+    #   output: "output-header"
+
+  # logs:
+  #   mode: development
+  #   level: debug
+  #   file_logger_options:
+  #     log_output: "./log/error.log"
+  #     max_size: 10
+  #     max_age: 24
+  #     max_backups: 10
+  #     compress: true
+      
+reload:
+  # sync interval
+  interval: 1s
+  # global patterns to sync
+  patterns: [ ".php" ]
+  # list of included for sync services
+  services:
+    http:
+      # recursive search for file patterns to add
+      recursive: true
+      # ignored folders
+      ignore: [ "vendor" ]
+      # service specific file pattens to sync
+      patterns: [ ".php", ".go", ".md" ]
+      # directories to sync. If recursive is set to true,
+      # recursive sync will be applied only to the directories in `dirs` section
+      dirs: [ "./src" ]

@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+
+  db:
+    build: ./db
+    container_name: db
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgrespw
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+    ports:
+      - 8080:8080
+
+  redis:
+    image: redis/redis-stack
+    container_name: redis
+    restart: always
+    ports:
+      - 6379:6379
+      - 8001:8001
+
+  api:
+    build: ./api
+    container_name: api
+    restart: always
+    environment:
+      DATABASE_HOST: db
+      REDIS_HOST: redis
+    ports:
+      - 4000:4000
+    volumes:
+      - ./api:/usr/src/api
+
+  tests:
+    build: ./api/tests
+    container_name: tests
+    restart: always
+    ports:
+      - 8089:8089
