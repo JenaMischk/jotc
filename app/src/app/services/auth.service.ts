@@ -1,22 +1,33 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, throwError, tap } from 'rxjs';
+import { catchError, tap, throwError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+
+
+export interface User {
+  email: string;
+  firstName: string;
+  lastName: string;
+  birthDate: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
-
-export class UserService {
-
-  loading = false;
+export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private toaster: ToastrService
-  ) { }
+    private toaster: ToastrService,
+    private router: Router
+  ) {
 
-  public login(user: User){
+  }
+
+  loading = false;
+
+  login(user: User) {
 
     const httpOptions = {
       headers: new HttpHeaders({
@@ -28,15 +39,34 @@ export class UserService {
     this.loading = true;
 
     return this.http.post<User>('http://localhost:4000/login', user, httpOptions).pipe(
-      tap(() => {
+      tap((res) => {
         this.loading = false;
+        this.setSession(res);
         this.toaster.success('User login successful', 'Success');
+        this.router.navigate(['jotc']);
       }),  
       catchError(err => this.handleError(err)));
-    
+
+  }
+        
+  private setSession(authResult: any) {
+      localStorage.setItem('jotc_token', authResult.token);
+  }          
+
+  logout() {
+    localStorage.removeItem("jotc_token");
+    this.router.navigate(['']);
   }
 
-  public handleError(error: HttpErrorResponse) {
+  public isLoggedIn() {
+      return localStorage.getItem('jotc_token') ? true : false;
+  }
+
+  public isLoggedOut() {
+    return !this.isLoggedIn();
+}
+
+  handleError(error: HttpErrorResponse) {
     this.loading = false;
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -55,11 +85,4 @@ export class UserService {
     return this.loading;
   }
 
-}
-
-export interface User {
-  email: string;
-  firstName: string;
-  lastName: string;
-  birthDate: string;
 }

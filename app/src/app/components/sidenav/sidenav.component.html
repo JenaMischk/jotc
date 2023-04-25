@@ -6,9 +6,10 @@
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item href="">Home</a>
-      <a mat-list-item href="login">Login</a>
-      <a mat-list-item href="jotc">JOTC Solver</a>
-      <a mat-list-item href="dashboard">Dashboard</a>
+      <a mat-list-item href="login" *ngIf="auth.isLoggedOut()">Login</a>
+      <a mat-list-item href="jotc" *ngIf="auth.isLoggedIn()">JOTC Solver</a>
+      <a mat-list-item href="dashboard" *ngIf="auth.isLoggedIn()">Dashboard</a>
+      <a mat-list-item *ngIf="auth.isLoggedIn()" [routerLink]="" (click)="auth.logout()">Logout</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -24,7 +25,7 @@
       <span>Jumping on The Clouds</span>
     </mat-toolbar>
     <!-- Add Content Here -->
-    <mat-progress-bar mode="indeterminate" *ngIf="user.getLoadingStatus()"></mat-progress-bar>
+    <mat-progress-bar mode="indeterminate" *ngIf="auth.getLoadingStatus()"></mat-progress-bar>
     <div class="router-content">
       <router-outlet></router-outlet>
     </div>

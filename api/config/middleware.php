@@ -25,6 +25,8 @@ return function (Slim\App $app) {
     // Parse json, form data and xml
     $app->addBodyParsingMiddleware();
 
+    $app->add(\App\Middleware\AuthMiddleware::class);
+
     $app->add(\App\Middleware\CorsMiddleware::class);
 
     // Add the Slim built-in routing middleware

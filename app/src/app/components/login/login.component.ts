@@ -1,6 +1,6 @@
 import { Component, Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { User, UserService } from 'src/app/services/user.service';
+import { AuthService, User } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +28,7 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private user: UserService
+    private auth: AuthService
   ) {}
 
   onSubmit(): void {
@@ -47,8 +47,8 @@ export class LoginComponent {
         lastName: this.loginForm.controls.lastName.value  ?? '',
         birthDate: this.loginForm.controls.birthDate.value ?? ''
       };
-      this.user.login(user).subscribe( res => {
-        console.log(res);
+      this.auth.login(user).subscribe( res => {
+
       });
     }
 

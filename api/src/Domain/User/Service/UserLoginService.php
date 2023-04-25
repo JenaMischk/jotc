@@ -4,6 +4,7 @@ namespace App\Domain\User\Service;
 
 use App\Domain\User\Service\UserValidator;
 use App\Domain\User\Repository\UserRepository;
+use Firebase\JWT\JWT;
 
 
 final class UserLoginService
@@ -25,7 +26,27 @@ final class UserLoginService
         if(!$user){
             $user = $this->userRepository->createUser($data);
         }
-        return $user;
+
+        $time = time();
+        $expiresAt = $time + 3600;
+        $payload = [
+            'iss' => 'jotc',
+            'aud' => 'jotc',
+            'iat' => $time,
+            'nbf' => $time,
+            'exp' => $expiresAt,
+            'userId' => $user['id']
+        ];
+
+        $key = getenv('JWT_SECRET_KEY') ? getenv('JWT_SECRET_KEY') : 'example_key';
+        $jwt = JWT::encode($payload, $key, 'HS256');
+
+        $result = [
+            'expiresAt' => $expiresAt,
+            'token' => $jwt
+        ];
+
+        return $result;
     }
 
 }
