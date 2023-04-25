@@ -1,0 +1,65 @@
+<form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>User Information</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Email address" formControlName="email">
+            <mat-error *ngIf="loginForm.controls['email'].hasError('required')">
+              Email address is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="loginForm.controls['email'].hasError('email')">
+              Email address is <strong>invalid</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="First name" formControlName="firstName">
+            <mat-error *ngIf="loginForm.controls['firstName'].hasError('required')">
+              First name is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="loginForm.controls['firstName'].hasError('minlength')">
+              First name is <strong>too short</strong>
+            </mat-error>
+            <mat-error *ngIf="loginForm.controls['firstName'].hasError('maxlength')">
+              First name is <strong>too long</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Last name" formControlName="lastName">
+            <mat-error *ngIf="loginForm.controls['lastName'].hasError('required')">
+              Last name is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="loginForm.controls['lastName'].hasError('minlength')">
+              Last name is <strong>too short</strong>
+            </mat-error>
+            <mat-error *ngIf="loginForm.controls['lastName'].hasError('maxlength')">
+              Last name is <strong>too long</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Birth date" formControlName="birthDate">
+            <mat-error *ngIf="loginForm.controls['birthDate'].hasError('required')">
+              Birth date is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

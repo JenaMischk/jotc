@@ -1,25 +1,6 @@
 <?php
 
 return function (Slim\App $app) {
-    
-    /*$pdo = function(App\Factory\DatabaseFactory $databaseFactory){
-        return $databaseFactory->getPDO();
-    };
-    
-    /*$app->add(new \Tuupola\Middleware\HttpBasicAuthentication([
-        "path" => "/",
-        "realm" => "Protected",
-        "authenticator" => new \Tuupola\Middleware\HttpBasicAuthentication\PdoAuthenticator([
-            "pdo" => $pdo,
-            "table" => "users",
-        ])
-    ]));*/
-
-    // Parse json, form data and xml
-    $app->addBodyParsingMiddleware();
-
-    // Add the Slim built-in routing middleware
-    $app->addRoutingMiddleware();
 
     //Handle ValidationException
     $app->add(
@@ -40,6 +21,14 @@ return function (Slim\App $app) {
             }
         }
     );
+
+    // Parse json, form data and xml
+    $app->addBodyParsingMiddleware();
+
+    $app->add(\App\Middleware\CorsMiddleware::class);
+
+    // Add the Slim built-in routing middleware
+    $app->addRoutingMiddleware();
 
     // Handle exceptions
     $app->addErrorMiddleware(true, true, true);
