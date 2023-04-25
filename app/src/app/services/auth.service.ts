@@ -33,7 +33,7 @@ export class AuthService {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
       }),
-      withCredentials: true
+      //withCredentials: true
     };
 
     this.loading = true;

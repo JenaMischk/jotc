@@ -25,6 +25,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatProgressBarModule} from '@angular/material/progress-bar';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { JotcComponent } from './components/jotc/jotc.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -33,7 +35,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     HomeComponent,
     DashboardComponent,
     SidenavComponent,
-    LoginComponent
+    LoginComponent,
+    JotcComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     ReactiveFormsModule,
     HttpClientModule,
     MatProgressBarModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    MatCheckboxModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

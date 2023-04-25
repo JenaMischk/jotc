@@ -29,7 +29,7 @@ final class CorsMiddleware implements MiddlewareInterface
         $routingResults = $routeContext->getRoutingResults();
         $methods = $routingResults->getAllowedMethods();
         $requestHeaders = $request->getHeaderLine('Access-Control-Request-Headers');
-        $origin = getenv('CORS_ORIGIN') ? getenv('CORS_ORIGIN') : 'http://localhost:4200';
+        $origin = getenv('CORS_ORIGIN') ? getenv('CORS_ORIGIN') : '*';
 
         $response = $handler->handle($request);
 
@@ -40,7 +40,7 @@ final class CorsMiddleware implements MiddlewareInterface
             ->withHeader('Access-Control-Allow-Headers', $requestHeaders ?: '*');
 
         // Optional: Allow Ajax CORS requests with Authorization header
-        $response = $response->withHeader('Access-Control-Allow-Credentials', 'true');
+        //$response = $response->withHeader('Access-Control-Allow-Credentials', 'true');
 
         return $response;
     }
