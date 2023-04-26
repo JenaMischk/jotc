@@ -2,19 +2,37 @@
 
 namespace App\Domain\JOTC\Service;
 
+use App\Persistency\CacheService;
 
 final class JOTCSolverService
 {
 
-    public function __construct()
+    private CacheService $cache;
+
+    public function __construct(CacheService $cache)
     {
+        $this->cache = $cache;
+    }
+
+    public function getSolution(array $input){
+
+        $input = $input['clouds'];
+
+        $key = implode(',', $input);
+        $key = hash('xxh128', "jotc_solution_$key");
+
+        $res = [];
+        if(!$res = json_decode($this->cache->read($key))){
+            $res = $this->solve($input);
+            $this->cache->write($key, json_encode($res));
+        }
+
+        return $res;
 
     }
 
     public function solve(array $input)
     {
-
-        $input = $input['clouds'];
 
         foreach ($input as $cloudIndex => $cloudType) {
             if ($cloudType === 1) {

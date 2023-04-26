@@ -20,7 +20,7 @@ final class JOTCSolveAction
     public function __invoke(Request $request, Response $response): Response
     {
         $data = $request->getParsedBody();
-        $result = $this->jotcSolverService->solve($data);
+        $result = $this->jotcSolverService->getSolution($data);
         $response->getBody()->write(json_encode($result));
         $response = $response
             ->withHeader('Content-type', 'application/json')

@@ -12,7 +12,7 @@ You can add or remove clouds with the plus/minus symbols.</h4>
 </div>
 <br><br>
 <button mat-raised-button color="primary" (click)="submit()">Submit</button>
-<br><br>
+<br><br><br>
 <h4 *ngIf="jotcSolution?.total === 0">There is no solution</h4>
 <h4 *ngIf="jotcSolution?.total > 0">This input can be solved with {{jotcSolution.total}} move<ng-container *ngIf="jotcSolution.total > 1">s</ng-container>:</h4>
-<h4 *ngFor="let move of jotcSolution?.moves; index as i;">Move from {{move.from}} to {{move.to}}</h4>
+<p *ngFor="let move of jotcSolution?.moves; index as i;">Move from {{move.from}} to {{move.to}}</p>
