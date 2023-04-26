@@ -14,6 +14,7 @@ return function (App $app) {
 
     $app->post('/login', \App\Action\User\UserLoginAction::class);
 
+    $app->get('/jotc', \App\Action\JOTC\JOTCFinderAction::class);
     $app->post('/jotc', \App\Action\JOTC\JOTCSolveAction::class);
 
 };

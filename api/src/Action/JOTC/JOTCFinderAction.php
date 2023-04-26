@@ -4,23 +4,23 @@ namespace App\Action\JOTC;
 
 use Nyholm\Psr7\Response as Response;
 use Nyholm\Psr7\ServerRequest as Request;
-use App\Domain\JOTC\Service\JOTCSolverService;
+use App\Domain\JOTC\Service\JOTCFinderService;
 
 
-final class JOTCSolveAction
+final class JOTCFinderAction
 {
 
-    private JOTCSolverService $jotcSolverService;
+    private JOTCFinderService $jotcFinderService;
 
-    public function __construct(JOTCSolverService $jotcSolverService)
+    public function __construct(JOTCFinderService $jotcFinderService)
     {
-        $this->jotcSolverService = $jotcSolverService;
+        $this->jotcFinderService = $jotcFinderService;
     }
 
     public function __invoke(Request $request, Response $response): Response
     {
-        $data = $request->getParsedBody();
-        $result = $this->jotcSolverService->getSolution($data, $request->getAttribute('userId'));
+        $params = $request->getQueryParams() ? $request->getQueryParams() : [];
+        $result = $this->jotcFinderService->findSubmissions($params);
         $response->getBody()->write(json_encode($result));
         $response = $response
             ->withHeader('Content-type', 'application/json')

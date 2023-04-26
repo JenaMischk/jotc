@@ -3,18 +3,22 @@
 namespace App\Domain\JOTC\Service;
 
 use App\Persistency\CacheService;
+use App\Domain\JOTC\Repository\JOTCRepository;
+
 
 final class JOTCSolverService
 {
 
     private CacheService $cache;
+    private JOTCRepository $JOTCRepository;
 
-    public function __construct(CacheService $cache)
+    public function __construct(CacheService $cache, JOTCRepository $JOTCRepository)
     {
         $this->cache = $cache;
+        $this->JOTCRepository = $JOTCRepository;
     }
 
-    public function getSolution(array $input){
+    public function getSolution(array $input, int $userId){
 
         $input = $input['clouds'];
 
@@ -26,6 +30,13 @@ final class JOTCSolverService
             $res = $this->solve($input);
             $this->cache->write($key, json_encode($res));
         }
+
+        $submission = [
+            'userId' => $userId,
+            'input' => json_encode($input),
+            'output' => json_encode($res)
+        ];
+        $this->JOTCRepository->createSubmission($submission);
 
         return $res;
 

@@ -50,8 +50,7 @@ final class AuthMiddleware implements MiddlewareInterface
             return $handler->handle($request);
 
         } catch(\Exception $e){
-            $response = $handler->handle($request)->withStatus(401);
-            return $response;
+            return new \Nyholm\Psr7\Response(401);
         }
 
     }
