@@ -55,7 +55,7 @@
           
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Birth date</mat-label>
-            <input matInput [matDatepicker]="picker" placeholder="04/05/1977" formControlName="birthDate">
+            <input matInput [matDatepicker]="picker" placeholder="19/12/1980" formControlName="birthDate">
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error *ngIf="loginForm.controls['birthDate'].hasError('required')">

@@ -27,9 +27,21 @@ import { ToastrModule } from 'ngx-toastr';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { JotcComponent } from './components/jotc/jotc.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
+const CUSTOM_DATE_FORMAT = {
+  parse: {
+    dateInput: 'DD/MM/YYYY', // this is how your date will be parsed from Input
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY', // this is how your date will get displayed on the Input
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY'
+  }
+};
 
 @NgModule({
   declarations: [
@@ -65,7 +77,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatNativeDateModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMAT }
   ],
   bootstrap: [AppComponent]
 })
