@@ -1,4 +1,4 @@
-<form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
+<form *ngIf="auth.isLoggedOut()" [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
   <mat-card class="shipping-card">
     <mat-card-header>
       <mat-card-title>User Information</mat-card-title>
@@ -63,3 +63,6 @@
     </mat-card-actions>
   </mat-card>
 </form>
+<div *ngIf="auth.isLoggedIn()">
+  <h1>You are already logged in</h1>
+</div>
