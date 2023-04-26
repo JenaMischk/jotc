@@ -7,7 +7,8 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Email address" formControlName="email">
+            <mat-label>Email address</mat-label>
+            <input matInput placeholder="john@crow.com" formControlName="email">
             <mat-error *ngIf="loginForm.controls['email'].hasError('required')">
               Email address is <strong>required</strong>
             </mat-error>
@@ -20,7 +21,8 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="First name" formControlName="firstName">
+            <mat-label>First name</mat-label>
+            <input matInput placeholder="John" formControlName="firstName">
             <mat-error *ngIf="loginForm.controls['firstName'].hasError('required')">
               First name is <strong>required</strong>
             </mat-error>
@@ -34,7 +36,8 @@
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Last name" formControlName="lastName">
+            <mat-label>Last name</mat-label>
+            <input matInput placeholder="Crow" formControlName="lastName">
             <mat-error *ngIf="loginForm.controls['lastName'].hasError('required')">
               Last name is <strong>required</strong>
             </mat-error>
@@ -49,12 +52,20 @@
       </div>
       <div class="row">
         <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Birth date" formControlName="birthDate">
+          
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Birth date</mat-label>
+            <input matInput [matDatepicker]="picker" placeholder="04/05/1977" formControlName="birthDate">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
             <mat-error *ngIf="loginForm.controls['birthDate'].hasError('required')">
               Birth date is <strong>required</strong>
             </mat-error>
+            <mat-error *ngIf="loginForm.controls['birthDate'].hasError('underEighteen')">
+              You must be at least 18 years old
+            </mat-error>
           </mat-form-field>
+
         </div>
       </div>
     </mat-card-content>

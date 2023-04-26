@@ -1,5 +1,5 @@
 import { Component, Injectable } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
 import { AuthService, User } from 'src/app/services/auth.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class LoginComponent {
       Validators.required, Validators.minLength(3), Validators.maxLength(30)])
     ],
     birthDate: [null, Validators.compose([
-      Validators.required, Validators.minLength(3), Validators.maxLength(30)])
+      Validators.required, this.dateValidator()])
     ]
   });
 
@@ -53,4 +53,23 @@ export class LoginComponent {
     }
 
   }
+
+  dateValidator(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+
+      const eighteenYearsAgo = new Date(new Date().setFullYear(new Date().getFullYear() - 18 )).getTime();
+  
+      if(!(control && control.value)) {
+        // if there's no control or no value, that's ok
+        return null;
+      }
+  
+      // return null if there's no errors
+      return control.value.getTime() > eighteenYearsAgo 
+        ? {underEighteen: 'You cannot use future dates' } 
+        : null;
+        
+    }
+  }
+
 }

@@ -27,6 +27,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { JotcComponent } from './components/jotc/jotc.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 @NgModule({
@@ -58,7 +60,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     HttpClientModule,
     MatProgressBarModule,
     ToastrModule.forRoot(),
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
