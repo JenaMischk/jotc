@@ -1,0 +1,33 @@
+.cloudContainer{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.unitaryCloud{
+    margin: 2%;
+}
+
+.addCloudBtn{
+    margin-left: 2%;
+}
+
+.greenIcon {
+    color: green;
+}
+
+.redIcon {
+    color: red;
+}
+
+.superscript{
+    vertical-align: super;  
+}
+
+.smallIcon {
+    transform: scale(0.9);
+}
+
+.bigIcon {
+    font-size: 200%;
+}

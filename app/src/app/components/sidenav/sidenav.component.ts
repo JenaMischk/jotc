@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
+import { DataService } from 'src/app/services/data.service';
 
 
 @Component({
@@ -20,7 +21,8 @@ export class SidenavComponent {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    public auth: AuthService
+    public auth: AuthService,
+    public data: DataService
   ) {}
 
 }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, tap, throwError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { DataService } from './data.service';
 
 
 export interface User {
@@ -18,34 +19,22 @@ export interface User {
 export class AuthService {
 
   constructor(
-    private http: HttpClient,
+    private data: DataService,
     private toaster: ToastrService,
     private router: Router
   ) {
 
   }
 
-  loading = false;
-
   login(user: User) {
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      }),
-      //withCredentials: true
-    };
-
-    this.loading = true;
-
-    return this.http.post<User>('http://localhost:4000/login', user, httpOptions).pipe(
+    return this.data.post('http://localhost:4000/login', user).pipe(
       tap((res) => {
-        this.loading = false;
         this.setSession(res);
         this.toaster.success('User login successful', 'Success');
         this.router.navigate(['jotc']);
-      }),  
-      catchError(err => this.handleError(err)));
+      })
+    );
 
   }
         
@@ -64,25 +53,6 @@ export class AuthService {
 
   public isLoggedOut() {
     return !this.isLoggedIn();
-}
-
-  handleError(error: HttpErrorResponse) {
-    this.loading = false;
-    if (error.status === 0) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
-      console.error(`Backend returned code ${error.status}, body was: `, error.error);
-      this.toaster.error(JSON.stringify(error.error), 'User login failed');
-    }
-    // Return an observable with a user-facing error message.
-    return throwError(() => new Error('Something is not working. Please try again later.'));
-  }
-
-  public getLoadingStatus(){
-    return this.loading;
   }
 
 }

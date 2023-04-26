@@ -1,9 +1,9 @@
 <?php
 
-namespace App\JOTC;
+namespace App\Domain\JOTC\Service;
 
 
-final class JOTCSolver
+final class JOTCSolverService
 {
 
     public function __construct()
@@ -13,6 +13,9 @@ final class JOTCSolver
 
     public function solve(array $input)
     {
+
+        $input = $input['clouds'];
+
         foreach ($input as $cloudIndex => $cloudType) {
             if ($cloudType === 1) {
                 unset($input[$cloudIndex]);
@@ -21,6 +24,8 @@ final class JOTCSolver
         
         $target = array_key_last($input);    
         $count = 0;
+
+        $res = [];
         
         for($cloudIndex = 0; $cloudIndex < $target;) {
             
@@ -28,19 +33,38 @@ final class JOTCSolver
             $twoStepIndex = $cloudIndex + 2;
             
             if ( isset($input[$twoStepIndex]) ) {
+                $res['moves'][] = [
+                    'from' => $cloudIndex,
+                    'to' => $twoStepIndex
+                ];
                 $cloudIndex = $twoStepIndex;
                 $count++;
                 continue;
             }
                     
             if ( isset($input[$oneStepIndex]) ) {
+                $res['moves'][] = [
+                    'from' => $cloudIndex,
+                    'to' => $oneStepIndex
+                ];
                 $cloudIndex = $oneStepIndex;
                 $count++;
+                continue;
             }
+
+            $res['moves'][] = [
+                'from' => $cloudIndex,
+                'to' => 'N.A.'
+            ];
+            $res['total'] = 0;
+
+            return $res;
             
         }
+
+        $res['total'] = $count;
         
-        return $count;
+        return $res;
     }
 
 }

@@ -14,4 +14,6 @@ return function (App $app) {
 
     $app->post('/login', \App\Action\User\UserLoginAction::class);
 
+    $app->post('/jotc', \App\Action\JOTC\JOTCSolveAction::class);
+
 };

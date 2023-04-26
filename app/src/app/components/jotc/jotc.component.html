@@ -1,4 +1,18 @@
-<div>
-    <mat-checkbox *ngFor="let cloud of clouds; index as i;"></mat-checkbox>
-    <mat-icon fontIcon="library_add" (click)="addCloud()"></mat-icon>
+<h4>Select the clouds to avoid. You can click the clouds to change their state.
+You can add or remove clouds with the plus/minus symbols.</h4>
+<br>
+<div class="cloudContainer">
+    <span class="unitaryCloud" *ngFor="let cloud of clouds; index as i;">
+        <mat-icon class="superscript smallIcon" fontIcon="remove_circle_outline" (click)="removeCloud(i)"></mat-icon>
+        <mat-icon class="greenIcon bigIcon" [inline]="true" *ngIf="cloud === 0" fontIcon="cloud_queue" (click)="toggleCloud(i)"></mat-icon>
+        <mat-icon class="redIcon bigIcon" [inline]="true" *ngIf="cloud === 1" fontIcon="cloud_off" (click)="toggleCloud(i)"></mat-icon>
+        {{i}}
+    </span>
+    <mat-icon class="addCloudBtn" fontIcon="add_circle_outline" (click)="addCloud()"></mat-icon>
 </div>
+<br><br>
+<button mat-raised-button color="primary" (click)="submit()">Submit</button>
+<br><br>
+<h4 *ngIf="jotcSolution?.total === 0">There is no solution</h4>
+<h4 *ngIf="jotcSolution?.total > 0">This input can be solved with {{jotcSolution.total}} move<ng-container *ngIf="jotcSolution.total > 1">s</ng-container>:</h4>
+<h4 *ngFor="let move of jotcSolution?.moves; index as i;">Move from {{move.from}} to {{move.to}}</h4>
