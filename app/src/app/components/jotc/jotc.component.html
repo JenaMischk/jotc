@@ -4,8 +4,8 @@ You can add or remove clouds with the plus/minus symbols.</h4>
 <div class="cloudContainer">
     <span class="unitaryCloud" *ngFor="let cloud of clouds; index as i;">
         <mat-icon class="superscript smallIcon" fontIcon="remove_circle_outline" (click)="removeCloud(i)"></mat-icon>
-        <mat-icon class="greenIcon bigIcon" [inline]="true" *ngIf="cloud === 0" fontIcon="cloud_queue" (click)="toggleCloud(i)"></mat-icon>
-        <mat-icon class="redIcon bigIcon" [inline]="true" *ngIf="cloud === 1" fontIcon="cloud_off" (click)="toggleCloud(i)"></mat-icon>
+        <mat-icon class="greenIcon" *ngIf="cloud === 0" fontIcon="cloud_queue" (click)="toggleCloud(i)"></mat-icon>
+        <mat-icon class="redIcon" *ngIf="cloud === 1" fontIcon="cloud_off" (click)="toggleCloud(i)"></mat-icon>
         {{i}}
     </span>
     <mat-icon class="addCloudBtn" fontIcon="add_circle_outline" (click)="addCloud()"></mat-icon>

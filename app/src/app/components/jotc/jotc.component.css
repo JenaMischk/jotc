@@ -25,9 +25,5 @@
 }
 
 .smallIcon {
-    transform: scale(0.9);
-}
-
-.bigIcon {
-    font-size: 200%;
+    transform: scale(0.7);
 }
