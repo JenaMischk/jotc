@@ -23,7 +23,7 @@ export class DataService {
   loading = false;
 
 
-  get(url: string){
+  get(url: string, queryParams = ''){
     this.loading = true;
     return this.http.get(url, this.httpOptions).pipe(
       tap((res) => {

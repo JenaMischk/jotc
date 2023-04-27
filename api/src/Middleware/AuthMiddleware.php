@@ -42,16 +42,16 @@ final class AuthMiddleware implements MiddlewareInterface
 
             $key = getenv('JWT_SECRET_KEY') ? getenv('JWT_SECRET_KEY') : 'example_key';
             $decoded = JWT::decode($token, new Key($key, 'HS256'));
-            
-            $userId = $decoded->userId;
-
-            $request = $request->withAttribute('userId', $userId);
-
-            return $handler->handle($request);
 
         } catch(\Exception $e){
             return new \Nyholm\Psr7\Response(401);
         }
+
+        $userId = $decoded->userId;
+
+        $request = $request->withAttribute('userId', $userId);
+
+        return $handler->handle($request);
 
     }
 }
