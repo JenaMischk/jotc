@@ -39,9 +39,8 @@ export class AuthInterceptor implements HttpInterceptor {
         this.toaster.error('', 'Authentication failure');
         this.auth.logout();
       }
-      const error = err.error?.message || err.statusText;
       console.error(err);
-      return throwError(() => error);
+      return throwError(() => err);
     }));
 
   }

@@ -50,7 +50,9 @@ export class DataService {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.
       console.error(`Backend returned code ${error.status}, body was: `, error.error);
-      this.toaster.error(JSON.stringify(error), 'API Error');
+      if(error.error.email){
+        this.toaster.error(error.error.email, 'Email validation failed');
+      }
     }
     // Return an observable with a user-facing error message.
     return throwError(() => new Error('Something is not working. Please try again later.'));
