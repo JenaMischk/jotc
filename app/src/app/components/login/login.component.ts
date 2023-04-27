@@ -66,8 +66,6 @@ export class LoginComponent {
         return null;
       }
   
-      console.log(date.format('DD/MM/YYYY'));
-      console.log(eighteenYearsAgo.format('DD/MM/YYYY'));
       // return null if there's no errors
       return eighteenYearsAgo.isBefore(date)
         ? {underEighteen: true } 

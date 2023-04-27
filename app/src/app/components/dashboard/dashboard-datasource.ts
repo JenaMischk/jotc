@@ -2,7 +2,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
-import { Observable, of as observableOf, merge } from 'rxjs';
+import { Observable, of as observableOf, merge, BehaviorSubject } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 
 // TODO: Replace this with your own data model type
@@ -20,13 +20,37 @@ export interface DashboardItem {
  * (including sorting, pagination, and filtering).
  */
 export class DashboardDataSource extends DataSource<DashboardItem> {
-  data: DashboardItem[] | undefined;
+  data: any;
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
   filter: string | undefined;
-  
+  totalRows = 0;
+
   constructor(private dataService: DataService) {
     super();
+  }
+
+  private itemSubject = new BehaviorSubject<any>([]);
+
+  getSubmissions(){
+    let queryParams = '';
+
+    if (this.paginator){
+      queryParams += 'page=' + this.paginator.pageIndex + '&pageSize=' + this.paginator.pageSize;
+    }
+
+    if (!this.sort || !this.sort.active || this.sort.direction === '') {
+      
+    }else{
+      queryParams += '&sort=' + this.sort?.direction + '&sortBy=' + this.sort?.active;
+    }
+
+    console.log(queryParams);
+    this.dataService.get('http://localhost:4000/jotc', queryParams).subscribe( (res: any) => {
+      this.itemSubject.next(res);
+      this.totalRows = res[0]?.total_rows;
+    });
+
   }
 
   /**
@@ -35,10 +59,8 @@ export class DashboardDataSource extends DataSource<DashboardItem> {
    * @returns A stream of the items to be rendered.
    */
   connect(): Observable<any> {
-
-    const queryParams = '';
-    let data = this.dataService.get('http://localhost:4000/jotc', queryParams);
-    return data;
+    
+    return this.itemSubject.asObservable();
 
     /*if (this.paginator && this.sort) {
       // Combine everything that affects the rendered data into one update
@@ -56,7 +78,9 @@ export class DashboardDataSource extends DataSource<DashboardItem> {
    *  Called when the table is being destroyed. Use this function, to clean up
    * any open connections or free any held resources that were set up during connect.
    */
-  disconnect(): void {}
+  disconnect(): void {
+    this.itemSubject.complete();
+  }
 
   /**
    * Paginate the data (client-side). If you're using server-side pagination,
