@@ -1,6 +1,47 @@
 <h4>Previous submissions</h4>
 
 <div class="mat-elevation-z8">
+
+  <form [formGroup]="searchForm">
+
+    <mat-card class="shipping-card">
+      <mat-card-header>
+  
+      </mat-card-header>
+      <mat-card-content>
+
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Search by email</mat-label>
+              <input matInput placeholder="john@crow.com" formControlName="filter">
+            </mat-form-field>    
+          </div>
+        </div>
+    
+        <div class="row">
+          <div class="col">
+            <mat-form-field>
+              <mat-label>Start date</mat-label>
+              <input matInput [matDatepicker]="pickerBegin" placeholder="19/12/1980" formControlName="dateBegin">
+              <mat-datepicker-toggle matIconSuffix [for]="pickerBegin"></mat-datepicker-toggle>
+              <mat-datepicker #pickerBegin></mat-datepicker>
+            </mat-form-field>
+            <span> </span>
+            <mat-form-field>
+              <mat-label>End date</mat-label>
+              <input matInput [matDatepicker]="pickerEnd" placeholder="19/12/2023" formControlName="dateEnd">
+              <mat-datepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+              <mat-datepicker #pickerEnd></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+    
+      </mat-card-content>
+    </mat-card>
+
+  </form>
+
   <table mat-table matSort aria-label="Elements" style="display: block; overflow: auto;">
     <!-- Id Column -->
     <ng-container matColumnDef="id">

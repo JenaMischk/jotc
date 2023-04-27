@@ -23,7 +23,9 @@ export class DashboardDataSource extends DataSource<DashboardItem> {
   data: any;
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
-  filter: string | undefined;
+  filter: any;
+  dateBegin: any;
+  dateEnd: any;
   totalRows = 0;
 
   constructor(private dataService: DataService) {
@@ -44,6 +46,19 @@ export class DashboardDataSource extends DataSource<DashboardItem> {
     }else{
       queryParams += '&sort=' + this.sort?.direction + '&sortBy=' + this.sort?.active;
     }
+
+    if (this.filter){
+      queryParams += '&email=' + this.filter;
+    }
+
+    if (this.dateBegin){
+      queryParams += '&dateBegin=' + this.dateBegin;
+    }
+
+    if (this.dateEnd){
+      queryParams += '&dateEnd=' + this.dateEnd;
+    }
+
 
     this.dataService.get('http://localhost:4000/jotc', queryParams).subscribe( (res: any) => {
       this.itemSubject.next(res);

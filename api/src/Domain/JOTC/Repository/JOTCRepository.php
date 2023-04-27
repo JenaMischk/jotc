@@ -23,14 +23,17 @@ final class JOTCRepository
         $sort = isset($params['sort']) ? $params['sort'] : 'asc';
         $sortBy = isset($params['sortBy']) ? $params['sortBy'] : 'id';
 
-        $dateBegin = isset($params['dateBegin']) ? $params['dateBegin'] : null;
-        $dateEnd = isset($params['dateEnd']) ? $params['dateEnd'] : null;
+        //TODO: check if timestamp includes milliseconds and remove them only when so
+        $dateBegin = isset($params['dateBegin']) ? $params['dateBegin']/1000 : null;
+        $dateEnd = isset($params['dateEnd']) ? $params['dateEnd']/1000 : null;
         $email = isset($params['email']) ? $params['email'] : null;
+
+        var_dump($dateBegin);
 
         $whereInsert = '';
         $whereInsert .= $dateBegin ? "AND date > to_timestamp(:dateBegin) " : '';
         $whereInsert .= $dateEnd ? "AND date < to_timestamp(:dateEnd) " : '';
-        $whereInsert .= $email ? "AND user_id IN (SELECT id FROM users WHERE email = :email) " : '';
+        $whereInsert .= $email ? "AND s.user_id IN (SELECT id FROM users WHERE email LIKE :email) " : '';
 
         $orderByInsert = '';
         //TODO: this statement is open to SQL injection; fix it
@@ -54,7 +57,7 @@ final class JOTCRepository
 
         if($dateBegin) $stmt->bindValue(':dateBegin', $dateBegin);
         if($dateEnd) $stmt->bindValue(':dateEnd', $dateEnd);
-        if($email) $stmt->bindValue(':email', $email);
+        if($email) $stmt->bindValue(':email', "%".$email."%");
         $stmt->bindValue(':pageSize', $pageSize);
         $stmt->bindValue(':pageOffset', $page * $pageSize);
 
