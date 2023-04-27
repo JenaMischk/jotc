@@ -18,7 +18,7 @@ export class DashboardComponent implements AfterViewInit{
   dataSource: DashboardDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'user_id', 'input', 'output', 'date'];
+  displayedColumns = ['id', 'user_email', 'input', 'output', 'date'];
 
   constructor(
     private dataService: DataService

@@ -38,8 +38,9 @@ final class JOTCRepository
         $orderByInsert .= $sortBy ? "ORDER BY $sortBy " : '';
         $orderByInsert .= $sort === 'desc' ? "DESC " : '';
 
-        $sql = "SELECT *, count(*) OVER() AS total_rows
-                FROM submissions
+        $sql = "SELECT s.id, u.email as user_email, s.input, s.output, s.date, count(*) OVER() AS total_rows
+                FROM submissions s
+                LEFT JOIN users u ON (s.user_id = u.id)
                 WHERE true
                 $whereInsert
                 $orderByInsert

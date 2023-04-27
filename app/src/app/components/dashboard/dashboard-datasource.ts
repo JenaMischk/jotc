@@ -45,7 +45,6 @@ export class DashboardDataSource extends DataSource<DashboardItem> {
       queryParams += '&sort=' + this.sort?.direction + '&sortBy=' + this.sort?.active;
     }
 
-    console.log(queryParams);
     this.dataService.get('http://localhost:4000/jotc', queryParams).subscribe( (res: any) => {
       this.itemSubject.next(res);
       this.totalRows = res[0]?.total_rows;

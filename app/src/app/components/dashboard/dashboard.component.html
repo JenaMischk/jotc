@@ -4,14 +4,14 @@
   <table mat-table matSort aria-label="Elements" style="display: block; overflow: auto;">
     <!-- Id Column -->
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
       <td mat-cell *matCellDef="let row">{{row.id}}</td>
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="user_id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>UserId</th>
-      <td mat-cell *matCellDef="let row">{{row.user_id}}</td>
+    <ng-container matColumnDef="user_email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>User Email</th>
+      <td mat-cell *matCellDef="let row">{{row.user_email}}</td>
     </ng-container>
 
     <ng-container matColumnDef="input">
